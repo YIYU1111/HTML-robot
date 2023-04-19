@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chatbot Interaction</title>
+</head>
+<body class="bg-image">
+	<h1>Chatbot Interaction</h1>
+	<div id="chat-container"></div>
+	<form id="chat-form">
+		<input type="text" id="chat-input" />
+		<button type="submit">Send</button>
+	</form>
+	<script>
+		const chatContainer = document.getElementById("chat-container");
+		const chatForm = document.getElementById("chat-form");
+		const chatInput = document.getElementById("chat-input");
+
+		function appendBotMessage(message) {
+			const botMessage = document.createElement("div");
+			botMessage.classList.add("message", "bot-message");
+			botMessage.textContent = "Bot: " + message;
+			chatContainer.appendChild(botMessage);
+		}
+
+		function appendUserMessage(message) {
+			const userMessage = document.createElement("div");
+			userMessage.classList.add("message", "user-message");
+			userMessage.textContent = "You: " + message;
+			chatContainer.appendChild(userMessage);
+		}
+
+		chatForm.addEventListener("submit", function(event) {
+			event.preventDefault();
+			const message = chatInput.value.trim();
+			appendUserMessage(message);
+			chatInput.value = "";
+			// TODO: Send message to chatbot and receive response
+			appendBotMessage("Sorry, I am just a demo chatbot and cannot respond to your message.");
+		});
+	</script>
+</body>
+</html>
+
+
+#chat-container {
+	height: 200px;
+	overflow-y: scroll;
+	border: 1px solid black;
+	padding: 10px;
+}
+
+.message {
+	margin-bottom: 10px;
+}
+
+.bot-message {
+	color: white;
+}
+
+.user-message {
+	color: orange;
+}
+
+body.bg-image {
+	background-image: url('https://oss.zhidx.com/uploads/2022/01/61e659dd1e318_61e659dd1b711_61e659dd1b6ea_%E5%A4%B4%E5%9B%BE2.png');
+	background-size: cover;
+	background-position: center;
+}
+
+
+
+const form = document.querySelector('#chat-form');
+const chatContainer = document.querySelector('#chat-container');
+const input = document.querySelector('#chat-input');
+
+form.addEventListener('submit', function(event) {
+	event.preventDefault();
+	const message = input.value;
+	addUserMessage(message);
+	const response = chatbotRespond(message);
+	addBotMessage(response);
+	input.value = '';
+});
+
+function addUserMessage(message) {
+	const messageElement = document.createElement('div');
+	messageElement.classList.add('message');
+	messageElement.classList.add('user-message');
+	messageElement.textContent = message;
+	chatContainer.appendChild(messageElement);
+}
+
+function addBotMessage(message) {
+	const messageElement = document.createElement('div');
+	messageElement.classList.add('message');
+	messageElement.classList.add('bot-message');
+	messageElement.textContent = message;
+	chatContainer.appendChild(messageElement);
+  
+}
+// Define a function to make an API request to the backend
+function makeApiRequest() {
+  // Create a new XMLHttpRequest object
+  const xhr = new XMLHttpRequest();
+  // Set the request URL and method
+  xhr.open('GET', '/api/endpoint');
+  // Set the request headers
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  // Define a callback function to handle the response
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      // Handle the response data
+      const data = JSON.parse(xhr.responseText);
+      console.log(data);
+    } else {
+      // Handle the error
+      console.log('Error:', xhr.statusText);
+    }
+  };
+  // Send the request
+  xhr.send();
+}
+
